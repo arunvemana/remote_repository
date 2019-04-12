@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views import generic
 from .forms import PersonForm
 from .models import Person
+from django.shortcuts import get_object_or_404
+
 def makeentry(request):
     if request.method=="POST":
         form = PersonForm(request.POST)
@@ -26,6 +28,13 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Person
     template_name = 'genericviews/detail.html'
+
+    def get_object(self,*args,**kwargs):
+        a = self.kwargs.get('pk')
+        print(a)
+        print('print is working')
+        return get_object_or_404(Person,pk=self.kwargs.get('PK'))
+
 
 
 
